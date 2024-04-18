@@ -14,7 +14,8 @@
     "type_traits": "c",
     "utility": "c",
     "math.h": "c",
-    "string.h": "c"
+    "string.h": "c",
+    "malloc.h": "c"
   },
   "C_Cpp.errorSquiggles": "disabled",
   "workbench.colorCustomizations": {

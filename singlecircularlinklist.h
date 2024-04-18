@@ -140,13 +140,19 @@ struct node* Delete_begin(struct node* start)
     if (start == NULL)
     {
         printf("Your list is empty. So, please insert some value.\n");
+        return NULL; // Return NULL after printing the message
+    }
+    else if (start->next == start) // Check if start points to itself
+    {
+        free(start);
+        start = NULL;
     }
     else
     {
         struct node* tmp = start;
         struct node* last = start;
 
-        while (last->next != start)
+        while (last->next != start) // Modify loop condition
         {
             last = last->next;
         }
