@@ -1,7 +1,11 @@
 #include"singlecircularlinklist.h"
 
 int main(){
+    int top = 0;
     struct node*start = NULL;
+    printf("Enter the size of queue");
+    int size;
+    scanf("%d",&size);
     int choice, value;
     do {
         printf("\nCircular Queue Menu\n");
@@ -13,13 +17,22 @@ int main(){
         scanf("%d", &choice);
         switch (choice) {
             case 1:{
-                printf("Enter value to enqueue: ");
-                scanf("%d", &value);
-                start = Insert_at_end(value, start);
+                if(top != size){
+                    printf("Enter value to enqueue: ");
+                    scanf("%d", &value);
+                    start = Insert_at_end(value, start);
+                    top++;
+                } else {
+                    printf("Overflow.\n");
+                }
                 break;
             }
             case 2:{
-                start = Delete_begin(start);
+                if(top != 0){
+                    start = Delete_begin(start);
+                } else {
+                    printf("Underflow.\n");
+                }
                 break;
             }
             case 3:{
