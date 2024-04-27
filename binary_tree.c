@@ -11,12 +11,12 @@ typedef struct binary_tree
 
 tree*CreateNode(int);
 tree*Insert(int,tree*);
-tree*Display(tree*);
+void Display(tree*);
 tree*Find_the_path(int,tree*);
 tree*Delete(tree*);
 void Queue(tree*);
-tree* queue[50];
-int front = -1, rear = -1;
+int arr[50],i = 0;
+void Display_child(tree*root);
 
 int main(){
     tree*root = NULL;
@@ -40,7 +40,6 @@ int main(){
                 key2[strcspn(key2, "\n")] = '\0';
                 if(strncmp(key2,"Insert ",7) == 0) {
                     if (sscanf(key2 + 7, "%d", &a) == 1) {
-                        printf("Insert %d into the tree\n", a);
                         if (root == NULL)
                         {
                             root = Insert(a,root);
@@ -96,36 +95,6 @@ int main(){
     }
     return 0;
 }
-void Queue(tree*num) {
-    if(front = -1) {
-        front = rear = 0;
-        queue[front] = num;
-    } else {
-        queue[++front] = num;
-    }
-}
-
-tree*Insert(int num,tree*root) {
-    rear = 0;
-    tree*m = root;
-    if(m == NULL) {
-        Queue(m);
-        return CreateNode(num);
-    } else {
-        tree* tmp = queue[rear]; 
-        if(tmp -> left != NULL && tmp -> left != NULL) {
-            rear++;
-            Insert(num,root);
-        } else {
-            if (tmp -> left == NULL) {
-                Insert(num,tmp->left);
-            } else if (tmp -> left == NULL) { 
-                Insert(num, tmp->right);
-            }
-        }
-    }
-    return root;
-}
 
 tree* CreateNode(int value) {
     tree* newNode = (tree*)malloc(sizeof(tree));
@@ -139,11 +108,45 @@ tree* CreateNode(int value) {
     return newNode;
 }
 
-tree*Display(tree*root) {
-    rear = 0;
-    tree*tmp = queue[rear];
-    printf("%d - ",tmp -> val);
-    printf("%d - ",tmp -> left -> val);
-    printf("%d - ",tmp -> right -> val);
-    Display(queue[++rear]);
+tree*Insert(int num,tree*root) {
+    arr[i++] = num;
+    if(root == NULL) {
+        printf("Insert %d into the tree\n", num);
+        root =  CreateNode(num);
+    } else if(root->left == NULL|| root->right == NULL) {
+        if(root->left == NULL) {
+            printf("Insert %d into the tree\n", num);
+            root -> left =  CreateNode(num);
+        } else {
+            printf("Insert %d into the tree\n", num);
+            root -> right =  CreateNode(num);
+        }
+    } else {
+        i--;
+        if(root -> left != NULL && root -> right == NULL) {
+            Insert(num, root -> right);
+        } else if(root -> left == NULL && root -> right != NULL){
+            Insert(num, root -> left);
+        } else {
+            Insert(num, root -> left);
+        }
+    }
+    return root;
+}
+
+void Display(tree*root) {
+    printf("%d",root -> val);
+    printf("%d",root -> left -> val);
+    Display_child(root -> left);
+    printf("%d",root -> right -> val);
+    Display_child(root -> right);
+}
+
+void Display_child(tree*root) {
+    if(root -> left == NULL && root -> right == NULL) {
+        printf("%d",root);
+    } else {
+        Display_child(root->left);
+        Display_child(root->right);
+    }
 }
